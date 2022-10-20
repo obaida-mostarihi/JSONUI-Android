@@ -1,8 +1,8 @@
 package com.dracode.jsonui.model
 
 internal data class MarginsModel(
-    val marginTop: Int?,
-    val marginBottom: Int?,
-    val marginLeft: Int?,
-    val marginRight: Int?,
+    val marginTop: Int? = null,
+    val marginBottom: Int? = null,
+    val marginLeft: Int? = null,
+    val marginRight: Int? = null,
 )

@@ -1,8 +1,8 @@
 package com.dracode.jsonui.model
 
 internal data class PaddingsModel(
-    val paddingTop: Int?,
-    val paddingBottom: Int?,
-    val paddingRight: Int?,
-    val paddingLeft: Int?,
+    val paddingTop: Int? = null,
+    val paddingBottom: Int? = null,
+    val paddingRight: Int? = null,
+    val paddingLeft: Int? = null,
 )
