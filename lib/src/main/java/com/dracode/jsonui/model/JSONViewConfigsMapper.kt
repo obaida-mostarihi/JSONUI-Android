@@ -1,0 +1,57 @@
+package com.dracode.jsonui.model
+
+import org.json.JSONObject
+
+internal class JSONViewConfigsMapper {
+    companion object {
+        fun mapFrom(json: String): JSONViewConfigs {
+            val objectModel = JSONObject(json)
+
+            val constraintsObject = objectModel.getJSONObject("constraints")
+            val marginsObject = objectModel.getJSONObject("margin")
+            val paddingObject = objectModel.getJSONObject("padding")
+
+            val isEnabled = objectModel.getBoolean("isEnabled")
+            val constraints = getConstraints(constraintsObject)
+            val margins = getMargins(marginsObject)
+            val paddings = getPaddings(paddingObject)
+
+            return JSONViewConfigs(isEnabled, constraints, margins, paddings)
+        }
+
+        private fun getMargins(jsonObject: JSONObject): MarginsModel {
+            return MarginsModel(
+                marginTop = jsonObject.getInt("top"),
+                marginBottom = jsonObject.getInt("bottom"),
+                marginLeft = jsonObject.getInt("left"),
+                marginRight = jsonObject.getInt("right"),
+            )
+        }
+
+        private fun getPaddings(jsonObject: JSONObject): PaddingsModel {
+            return PaddingsModel(
+                paddingTop = jsonObject.getInt("top"),
+                paddingBottom = jsonObject.getInt("bottom"),
+                paddingLeft = jsonObject.getInt("left"),
+                paddingRight = jsonObject.getInt("right"),
+            )
+        }
+
+        private fun getConstraints(jsonObject: JSONObject): ConstraintsModel {
+            val bottomToTopOf = jsonObject.getConstraintFromKey("bottomToTopOf")
+            val bottomToBottomOf = jsonObject.getConstraintFromKey("bottomToBottomOf")
+            val topToTopOf = jsonObject.getConstraintFromKey("topToTopOf")
+            val topToBottomOf = jsonObject.getConstraintFromKey("topToBottomOf")
+            val endToEndOf = jsonObject.getConstraintFromKey("endToEndOf")
+            val endToStartOf = jsonObject.getConstraintFromKey("endToStartOf")
+            val startToStartOf = jsonObject.getConstraintFromKey("startToStartOf")
+            val startToEndOf = jsonObject.getConstraintFromKey("startToEndOf")
+            return ConstraintsModel(bottomToTopOf, bottomToBottomOf, topToTopOf, topToBottomOf, endToEndOf, endToStartOf, startToStartOf, startToEndOf)
+        }
+
+        private fun JSONObject.getConstraintFromKey(key: String): Constraints{
+            return if (getString(key).isNullOrEmpty()) Constraints.Free else if (getString(key) == PARENT_CONSTRAINT) Constraints.Parent else Constraints.Custom(getString(key))
+        }
+        private const val PARENT_CONSTRAINT = "parent"
+    }
+}
