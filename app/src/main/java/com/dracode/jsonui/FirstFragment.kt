@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.dracode.jsonui.databinding.FragmentFirstBinding
-import com.dracode.jsonui.view.loadJsonUi
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -36,7 +35,7 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-
+    // some change
         binding.buttonFirst.loadJsonUi(binding.rootLayout, "{\n" +
                 "  \"isEnabled\": true,\n" +
                 "  \"constraints\": {\n" +
